@@ -148,6 +148,9 @@ include_directories(
 add_executable(turtle_tracking src/turtle_tracking.cpp)
 target_link_libraries(turtle_tracking ${catkin_LIBRARIES})
 
+add_executable(turtle_move src/turtle_move.cpp)
+target_link_libraries(turtle_move ${catkin_LIBRARIES})
+
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
