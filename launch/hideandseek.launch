@@ -1,0 +1,9 @@
+<launch>
+    <param name="/object_origin_x" type="double" value="0.0" />
+    <param name="/object_origin_y" type="double" value="0.0" />
+    <param name="/object_radius" type="double" value="0.0" />
+
+    <node name="turtlesim_node" pkg="turtlesim" type="turtlesim_node" />
+    <node name="turtle_teleop_key" pkg="turtlesim" type="turtle_teleop_key" />
+
+</launch>
