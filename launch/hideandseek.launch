@@ -1,9 +1,7 @@
 <launch>
-    <param name="/object_origin_x" type="double" value="0.0" />
-    <param name="/object_origin_y" type="double" value="0.0" />
-    <param name="/object_radius" type="double" value="0.0" />
-
     <node name="turtlesim_node" pkg="turtlesim" type="turtlesim_node" />
+    <param name="/object_origin_x" type="double" value="1.0" />
+    <param name="/object_origin_y" type="double" value="8.0" />
     <node name="turtle_teleop_key" pkg="turtlesim" type="turtle_teleop_key" />
-
+    <node name="turtle_mark_target" pkg="ros_hideandseek" type="turtle_mark_target" />
 </launch>
