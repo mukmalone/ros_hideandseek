@@ -63,7 +63,7 @@ int main (int argc, char **argv)
             pen_state.request.off = 1;
             pen.call(pen_state);
             coordinates.request.x = 0.5;
-            coordinates.request.y = 0.5;
+            coordinates.request.y = 1.0;
             coordinates.request.theta = 0.0;
             move_abs.call(coordinates);
             //re-enable pen 
