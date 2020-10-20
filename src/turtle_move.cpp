@@ -53,12 +53,6 @@ int main(int argc, char **argv)
     control_command.angular.x = 0.0;
     control_command.angular.y = 0.0;
 
-
-    double target_x, target_y, tolerance;
-    target_x = 9.0;
-    target_y = 1.0;
-    tolerance = 0.05;
-
     bool complete = false;
     int target_num = 0;
     while (ros::ok() && !complete)
@@ -70,14 +64,20 @@ int main(int argc, char **argv)
         loop_rate.sleep();
         ++cnt;
         ROS_INFO("Turtle is at: x [%f], y [%f], theta [%f]",x, y, theta);
+
         //check if we are at the goal within tolerance
         double dx, dy;
         dx = abs(x-goals[target_num][0]);
         dy = abs(y-goals[target_num][1]);
+
         if(target_num==(num_goals-1)){
+            //if we have cycled through all goals stop
+            //eventually this is where we will look for the color to change
             complete=true;
         }
+
         if(dx<=tolerance && dy<=tolerance){
+            //if we are at the goal move to next goal
             target_num++;
         }
     }
