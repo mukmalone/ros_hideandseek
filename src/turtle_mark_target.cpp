@@ -66,7 +66,10 @@ int main (int argc, char **argv)
             coordinates.request.y = 1.0;
             coordinates.request.theta = 0.0;
             move_abs.call(coordinates);
-            //re-enable pen 
+            //re-enable pen with a different color
+            pen_state.request.r = 0;
+            pen_state.request.g = 0;
+            pen_state.request.b = 0;
             pen_state.request.off = 0;
             pen.call(pen_state);
             ++executed;

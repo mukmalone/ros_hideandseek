@@ -19,9 +19,9 @@ int main(int argc, char **argv)
     int num_goals=19;
     float goals[num_goals][2];
     goals[0][0]=10.0; goals[0][1]=1.0;
-    goals[1][0]=10.0; goals[1][1]=10.0;
-    goals[2][0]=1.0; goals[2][1]=10.0;
-    goals[3][0]=1.0; goals[3][1]=1.0;
+    goals[1][0]=10.0; goals[1][1]=2.0;
+    goals[2][0]=1.0; goals[2][1]=2.0;
+    goals[3][0]=1.0; goals[3][1]=3.0;
     goals[4][0]=10.0; goals[4][1]=3.0;
     goals[5][0]=10.0; goals[5][1]=4.0;
     goals[6][0]=1.0; goals[6][1]=4.0;
@@ -36,7 +36,7 @@ int main(int argc, char **argv)
     goals[15][0]=1.0; goals[15][1]=9.0;
     goals[16][0]=10.0; goals[16][1]=9.0;
     goals[17][0]=10.0; goals[17][1]=10.0;
-    goals[18][0]=1.0; goals[18][1]=9.0;
+    goals[18][0]=1.0; goals[18][1]=10.0;
 
     ros::init(argc, argv, "turtle_move");
  
@@ -57,8 +57,7 @@ int main(int argc, char **argv)
     bool complete = false;
     int target_num = 0;
     while (ros::ok() && !complete)
-    {
-        control_command.linear.x = 1.5 * sqrt( pow(goals[target_num][0]-x,2) + pow(goals[target_num][1]-y,2) );            
+    {                   
         float angle = atan2(goals[target_num][1]-y, goals[target_num][0]-x) - theta;
         //working on angles
         if (angle<-pi){
@@ -67,7 +66,15 @@ int main(int argc, char **argv)
         else if (angle>pi){
             angle-=2*pi;
         }
-        control_command.angular.z = 10 * (angle); 
+        control_command.angular.z = 5 * (angle); 
+        float adaptive_control=1;
+        if(abs(control_command.angular.z)<.5){
+            adaptive_control=.5;
+        } else {
+            adaptive_control=abs(control_command.angular.z);
+        }
+
+        control_command.linear.x = 1/adaptive_control* sqrt( pow(goals[target_num][0]-x,2) + pow(goals[target_num][1]-y,2) );
         control_pub.publish(control_command);
         ros::spinOnce();
         loop_rate.sleep();
@@ -79,15 +86,15 @@ int main(int argc, char **argv)
         dx = abs(x-goals[target_num][0]);
         dy = abs(y-goals[target_num][1]);
 
-        if(target_num==(num_goals-1)){
-            //if we have cycled through all goals stop
-            //eventually this is where we will look for the color to change
-            complete=true;
-        }
-
         if(dx<=tolerance && dy<=tolerance){
             //if we are at the goal move to next goal
             target_num++;
+        }
+
+        if(target_num==(num_goals)){
+            //if we have cycled through all goals stop
+            //eventually this is where we will look for the color to change
+            complete=true;
         }
     }
 
