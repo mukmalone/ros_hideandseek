@@ -13,5 +13,5 @@ Then turtlesim will perform a search of the area in a zig-zag pattern until it f
 - implementing go-to-goal algorithm and ensure driving is smooth
 
 ![image info](./game_circle_found.png)
-![image info](./game_in_progress.png)
+![image info](./game_in_process.png)
 ![image info](./game_start.png)
