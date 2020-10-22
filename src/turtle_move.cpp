@@ -1,16 +1,24 @@
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 #include <turtlesim/Pose.h>
+#include <std_msgs/String.h>
 #include <cmath>
 
 float x, y, theta;
-
+bool complete;
 
 void poseCallback(const turtlesim::Pose::ConstPtr& msg)
 {
     x = msg->x;
     y = msg->y;
     theta = msg->theta;
+}
+
+void statusCallback(const std_msgs::String::ConstPtr& msg)
+{
+    if(msg->data == "FOUND"){
+        complete=true;
+    }
 }
 
 int main(int argc, char **argv)
@@ -43,6 +51,7 @@ int main(int argc, char **argv)
     ros::NodeHandle n;
 
     ros::Subscriber sub_pose = n.subscribe("turtle1/pose", 1000, poseCallback);
+    ros::Subscriber sub_status = n.subscribe("status", 1000, statusCallback);
     ros::Publisher control_pub = n.advertise<geometry_msgs::Twist>("turtle1/cmd_vel", 10);
  
     ros::Rate loop_rate(20);
@@ -54,7 +63,7 @@ int main(int argc, char **argv)
     control_command.angular.x = 0.0;
     control_command.angular.y = 0.0;
 
-    bool complete = false;
+    complete = false;
     int target_num = 0;
     while (ros::ok() && !complete)
     {                   
@@ -74,7 +83,12 @@ int main(int argc, char **argv)
             adaptive_control=abs(control_command.angular.z);
         }
 
-        control_command.linear.x = 1/adaptive_control* sqrt( pow(goals[target_num][0]-x,2) + pow(goals[target_num][1]-y,2) );
+        control_command.linear.x = .5/adaptive_control* sqrt( pow(goals[target_num][0]-x,2) + pow(goals[target_num][1]-y,2) );
+        if(complete){
+            control_command.linear.x=0;
+            control_command.linear.z=0;
+        }
+
         control_pub.publish(control_command);
         ros::spinOnce();
         loop_rate.sleep();
@@ -96,6 +110,13 @@ int main(int argc, char **argv)
             //eventually this is where we will look for the color to change
             complete=true;
         }
+    }
+
+    if(complete){
+        control_command.linear.x=0;
+        control_command.linear.z=0;
+        control_pub.publish(control_command);
+        ros::spinOnce();
     }
 
     return 0;

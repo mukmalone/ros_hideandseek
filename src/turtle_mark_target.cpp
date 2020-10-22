@@ -21,7 +21,7 @@ int main (int argc, char **argv)
         pen_state.request.r = 255;
         pen_state.request.g = 255;
         pen_state.request.b = 255;
-        pen_state.request.width = 2;
+        pen_state.request.width = 10;
         pen_state.request.off = 1;
         
         if(pen.call(pen_state)){
@@ -46,7 +46,7 @@ int main (int argc, char **argv)
             while (cnt != 3)
             {
                 geometry_msgs::Twist control_command;
-                control_command.linear.x = 2.0;
+                control_command.linear.x = 2.5;
                 control_command.linear.y = 0.0;
                 control_command.linear.z = 0.0;
                 control_command.angular.x = 0.0;
@@ -71,6 +71,7 @@ int main (int argc, char **argv)
             pen_state.request.g = 0;
             pen_state.request.b = 0;
             pen_state.request.off = 0;
+            pen_state.request.width = 2;
             pen.call(pen_state);
             ++executed;
         }

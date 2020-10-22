@@ -1,6 +1,7 @@
 <launch>
     <node name="turtlesim_node" pkg="turtlesim" type="turtlesim_node" />
     <param name="/object_origin_x" type="double" value="3.0" />
-    <param name="/object_origin_y" type="double" value="8.0" />
+    <param name="/object_origin_y" type="double" value="3.0" />
     <node name="turtle_mark_target" pkg="ros_hideandseek" type="turtle_mark_target" />
+    <node name="turtle_tracking" pkg="ros_hideandseek" type="turtle_tracking" />
 </launch>
