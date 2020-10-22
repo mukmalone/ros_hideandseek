@@ -1,6 +1,7 @@
 #include <ros/ros.h>
 #include <turtlesim/TeleportAbsolute.h>
 #include <turtlesim/SetPen.h>
+#include <std_msgs/String.h>
 #include <geometry_msgs/Twist.h>
 
 int main (int argc, char **argv)
@@ -11,6 +12,7 @@ int main (int argc, char **argv)
     ros::ServiceClient move_abs = n.serviceClient<turtlesim::TeleportAbsolute>("/turtle1/teleport_absolute");
     ros::ServiceClient pen = n.serviceClient<turtlesim::SetPen>("/turtle1/set_pen");
     ros::Publisher control_pub = n.advertise<geometry_msgs::Twist>("turtle1/cmd_vel", 10);
+    ros::Publisher search_pub = n.advertise<std_msgs::String>("start_search", 10);
    
 
     int executed = 0;
@@ -25,8 +27,6 @@ int main (int argc, char **argv)
         pen_state.request.off = 1;
         
         if(pen.call(pen_state)){
-        
-
             //teleport to the target location
             double object_origin_x, object_origin_y;
             n.getParam("/object_origin_x", object_origin_x);
@@ -36,13 +36,14 @@ int main (int argc, char **argv)
             coordinates.request.y = object_origin_y;
             coordinates.request.theta = 0.0;
             move_abs.call(coordinates);
+            
             //turn on the pen and draw a circle
-
-            ros::Rate loop_rate(1);
             pen_state.request.off = 0;
             pen.call(pen_state);
 
+            ros::Rate loop_rate(1);
             int cnt = 0;
+            //this will draw the circle
             while (cnt != 3)
             {
                 geometry_msgs::Twist control_command;
@@ -76,10 +77,19 @@ int main (int argc, char **argv)
             ++executed;
         }
        else {
-            ROS_WARN("Service call failed sorry");
+            ROS_WARN("Waiting for turtlesim service to start");
         }
     }
-
+    //the board is setup and we will publish the search is ready to begin
+    ros::Rate loop_rate(2);
+    std_msgs::String start_search;
+    start_search.data="START_SEARCH";
+    while(ros::ok()){
+        search_pub.publish(start_search);
+        ros::spinOnce();
+        loop_rate.sleep();
+    }
+    
 
     return 0;
 }
