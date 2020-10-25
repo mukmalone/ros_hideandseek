@@ -6,6 +6,8 @@ The game will have the turtlesim robot search for a ball in it's workspace.  The
 
 Then turtlesim then will perform a search of the area in a zig-zag pattern with a specified search step size until it finds the ball using the color sensor.
 
+Here on YouTube I quickly go through running the game and the code: https://youtu.be/a16sIjR4Cco
+
 ## Key concepts covered ##
 - setting rosparam from roslaunch file: input for x, y and the search step size
 - roslaunch of multiple nodes and ensuring they all start properly and are activated as setup continues (needed to create topics which advertised when the setup was complete)
