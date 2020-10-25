@@ -12,6 +12,7 @@ Then turtlesim will perform a search of the area in a zig-zag pattern until it f
 - building a search path, first search routine will be simply brute force zig-zag pattern, search will always start at 0,0
 - implementing go-to-goal algorithm and ensure driving is smooth
 
+![image info](./pictures/hideandseek_rqt.png)
 ![image info](./pictures/game_start.png)
 ![image info](./pictures/game_in_process.png)
 ![image info](./pictures/game_circle_found.png)

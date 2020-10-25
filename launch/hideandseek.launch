@@ -4,7 +4,7 @@
     <param name="/object_origin_y" type="double" value="7.0" />
     <param name="/search_step_size" type="double" value="1.0" />
     <node name="turtle_mark_target" pkg="ros_hideandseek" type="turtle_mark_target" />
-    <node name="turtle_tracking" pkg="ros_hideandseek" type="turtle_tracking" />
+    <node name="turtle_color_search" pkg="ros_hideandseek" type="turtle_color_search" />
     <node name="next_goal_server" pkg="ros_hideandseek" type="next_goal_server" />
     <node name="turtle_move" pkg="ros_hideandseek" type="turtle_move" />
 </launch>
