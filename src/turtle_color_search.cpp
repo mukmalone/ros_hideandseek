@@ -23,7 +23,7 @@ void searchCallback(const std_msgs::String::ConstPtr& msg)
 int main(int argc, char **argv)
 {
   enable_search=false;
-  ros::init(argc, argv, "turtle_tracking");
+  ros::init(argc, argv, "turtle_color_search");
 
   ros::NodeHandle n;
 
