@@ -8,9 +8,7 @@ Then turtlesim then will perform a search of the area in a zig-zag pattern with 
 
 Here on YouTube I quickly go through running the game and the code.
 
-[![IMAGE ALT TEXT](http://img.youtube.com/vi/a16sIjR4Cco/0.jpg)](http://www.youtube.com/watch?v=a16sIjR4Cco "Hide and Seek game in ROS explained")
-
-https://youtu.be/a16sIjR4Cco
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/a16sIjR4Cco/0.jpg)](http://www.youtube.com/watch?v=a16sIjR4Cco "Learning ROS through programming - Turtlesim Hide and Seek")
 
 ## Key concepts covered ##
 - setting rosparam from roslaunch file: input for x, y and the search step size
