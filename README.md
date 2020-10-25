@@ -13,7 +13,7 @@ Here on YouTube I quickly go through running the game and the code.
 ## Key concepts covered ##
 - setting rosparam from roslaunch file: input for x, y and the search step size
 - roslaunch of multiple nodes and ensuring they all start properly and are activated as setup continues (needed to create topics which advertised when the setup was complete)
-- how to control the turtlesim robot to place the ball (go to goal algorithm)
+- how to control the turtlesim robot to place the ball
 - Subscribing to pose, color sensor topics to control the turtlesim robot and look for the ball
 - Creating custom topics to communicate with nodes control data
 - building a custom next goal service which calculates the next goal to the turtlesim robot.  The search routine will be simply a zig-zag pattern with a spacing specified in the roslaunch file, search will always start at a search step distance from 0,0 
