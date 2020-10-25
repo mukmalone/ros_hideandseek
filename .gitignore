@@ -237,5 +237,4 @@ _Pvt_Extensions
 
 # out/build folder
 /out
-out/build/x64-Debug
-ros_hideandseek/out
+/out/build/x64-Debug
