@@ -236,5 +236,5 @@ _Pvt_Extensions
 .fake/
 
 # out/build folder
-out/
+/out
 out/build/x64-Debug
