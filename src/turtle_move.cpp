@@ -2,6 +2,7 @@
 #include <geometry_msgs/Twist.h>
 #include <turtlesim/Pose.h>
 #include <std_msgs/String.h>
+#include <ros_hideandseek/NextGoal.h>
 #include <cmath>
 
 float x, y, theta;
@@ -34,29 +35,7 @@ int main(int argc, char **argv)
     enable_search=false;
     //flag to signal we are end of search pattern or we found circle
     complete = false;
-    //fixed zig-zag search pattern     
-    int num_goals=19;
-    float goals[num_goals][2];
-    goals[0][0]=10.0; goals[0][1]=1.0;
-    goals[1][0]=10.0; goals[1][1]=2.0;
-    goals[2][0]=1.0; goals[2][1]=2.0;
-    goals[3][0]=1.0; goals[3][1]=3.0;
-    goals[4][0]=10.0; goals[4][1]=3.0;
-    goals[5][0]=10.0; goals[5][1]=4.0;
-    goals[6][0]=1.0; goals[6][1]=4.0;
-    goals[7][0]=1.0; goals[7][1]=5.0;
-    goals[8][0]=10.0; goals[8][1]=5.0;
-    goals[9][0]=10.0; goals[9][1]=6.0;
-    goals[10][0]=1.0; goals[10][1]=6.0;
-    goals[11][0]=1.0; goals[11][1]=7.0;
-    goals[12][0]=10.0; goals[12][1]=7.0;
-    goals[13][0]=10.0; goals[13][1]=8.0;
-    goals[14][0]=1.0; goals[14][1]=8.0;
-    goals[15][0]=1.0; goals[15][1]=9.0;
-    goals[16][0]=10.0; goals[16][1]=9.0;
-    goals[17][0]=10.0; goals[17][1]=10.0;
-    goals[18][0]=1.0; goals[18][1]=10.0;
-
+    
     ros::init(argc, argv, "turtle_move");
  
     ros::NodeHandle n;
@@ -68,6 +47,12 @@ int main(int argc, char **argv)
     ros::Publisher control_pub = n.advertise<geometry_msgs::Twist>("turtle1/cmd_vel", 10);
     //topic which will monitor everything is setup
     ros::Subscriber sub_search = n.subscribe("/start_search", 1000, searchCallback); 
+    //service to get the next goal when we reach current goal
+    ros::ServiceClient goalClient = n.serviceClient<ros_hideandseek::NextGoal>("/next_goal");
+    ros_hideandseek::NextGoal nextGoal;
+
+    float search_step_size;
+    n.getParam("/search_step_size", search_step_size);
 
     ros::Rate loop_rate(20);
 
@@ -85,9 +70,33 @@ int main(int argc, char **argv)
     control_command.angular.y = 0.0;
 
     int goal_num = 0;
+    bool goal_complete = false;
     while (ros::ok() && !complete)
-    {                   
-        float angle = atan2(goals[goal_num][1]-y, goals[goal_num][0]-x) - theta;
+    {                 
+        if(goal_num==0){
+            //we are just starting and want to get our first goal
+            goal_complete=true;            
+        }  
+
+        if(goal_complete){
+            if(goal_num==0){
+                nextGoal.request.x=search_step_size;
+                nextGoal.request.y=search_step_size;
+                nextGoal.request.theta=theta;
+                goal_num++;
+            } else {
+                nextGoal.request.x=nextGoal.response.x;
+                nextGoal.request.y=nextGoal.response.y;
+                nextGoal.request.theta=theta;
+            }
+            goalClient.call(nextGoal);
+            goal_complete=false;
+        }
+
+        float goal_x=nextGoal.response.x;
+        float goal_y=nextGoal.response.y;
+
+        float angle = atan2(goal_y-y, goal_x-x) - theta;
         //ensure angle is between -pi and pi
         if (angle<-pi){
             angle+=2*pi;
@@ -105,7 +114,7 @@ int main(int argc, char **argv)
             adaptive_control=abs(control_command.angular.z);
         }
         //linear velocity
-        control_command.linear.x = .5/adaptive_control* sqrt( pow(goals[goal_num][0]-x,2) + pow(goals[goal_num][1]-y,2) );
+        control_command.linear.x = .5/adaptive_control* sqrt( pow(goal_x-x,2) + pow(goal_y-y,2) );
 
         if(complete){
             //slam on brakes if we found it
@@ -120,15 +129,15 @@ int main(int argc, char **argv)
 
         //check if we are at the goal within tolerance
         float dx, dy, tolerance=0.1;
-        dx = abs(x-goals[goal_num][0]);
-        dy = abs(y-goals[goal_num][1]);
+        dx = abs(x-goal_x);
+        dy = abs(y-goal_y);
 
         if(dx<=tolerance && dy<=tolerance){
             //if we are at the goal move to next goal
-            goal_num++;
+            goal_complete=true;
         }
 
-        if(goal_num==(num_goals)){
+        if(nextGoal.response.complete){
             //if we have cycled through all goals stop
             //eventually this is where we will look for the color to change
             complete=true;

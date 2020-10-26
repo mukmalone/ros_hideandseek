@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -54,11 +55,10 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+add_service_files(
+  FILES
+  NextGoal.srv
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -68,10 +68,10 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs
-# )
+generate_messages(
+  DEPENDENCIES
+  std_msgs  
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -145,14 +145,17 @@ include_directories(
 ## same as for the library above
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
-add_executable(turtle_tracking src/turtle_tracking.cpp)
-target_link_libraries(turtle_tracking ${catkin_LIBRARIES})
+add_executable(turtle_color_search src/turtle_color_search.cpp)
+target_link_libraries(turtle_color_search ${catkin_LIBRARIES})
 
 add_executable(turtle_move src/turtle_move.cpp)
 target_link_libraries(turtle_move ${catkin_LIBRARIES})
 
 add_executable(turtle_mark_target src/turtle_mark_target.cpp)
 target_link_libraries(turtle_mark_target ${catkin_LIBRARIES})
+
+add_executable(next_goal_server src/next_goal_server.cpp)
+target_link_libraries(next_goal_server ${catkin_LIBRARIES})
 
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(${PROJECT_NAME}_node

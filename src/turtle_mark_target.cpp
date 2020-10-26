@@ -28,7 +28,7 @@ int main (int argc, char **argv)
         
         if(pen.call(pen_state)){
             //teleport to the target location
-            double object_origin_x, object_origin_y;
+            float object_origin_x, object_origin_y;
             n.getParam("/object_origin_x", object_origin_x);
             n.getParam("/object_origin_y", object_origin_y);
             turtlesim::TeleportAbsolute coordinates;
@@ -63,9 +63,13 @@ int main (int argc, char **argv)
             //turn off pen and teleport to starting location
             pen_state.request.off = 1;
             pen.call(pen_state);
-            coordinates.request.x = 0.5;
-            coordinates.request.y = 1.0;
-            coordinates.request.theta = 0.0;
+
+            //get the search step size and place turutle at the start
+            float search_step_size;
+            n.getParam("/search_step_size", search_step_size);
+            coordinates.request.x = search_step_size;
+            coordinates.request.y = search_step_size;
+            coordinates.request.theta = 1.57;
             move_abs.call(coordinates);
             //re-enable pen with a different color
             pen_state.request.r = 0;
