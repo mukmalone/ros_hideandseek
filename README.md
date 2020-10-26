@@ -25,17 +25,16 @@ Here on YouTube I quickly go through running the game and the code.
 
 ## Usage ## 
 
-To use the < ros_hideandseek > pacage clone this repository into the < src > folder of your catkin workspace.
+To use the `ros_hideandseek` pacage clone this repository into the `src` folder of your catkin workspace.
 
-Then build the workspace with < catkin_make >.
+Then build the workspace with `catkin_make`.
 
-Finally start the package using roslaunch command:
-< roslaunch ros_hideandseek hideandseek.launch >
+Finally start the package using roslaunch command: `roslaunch ros_hideandseek hideandseek.launch`
 
 To change the starting location of the ball and search density edit the hideandseek.launch file using the following parameters:
-- <param name="/object_origin_x" type="double" value="5.0" /> 
-- <param name="/object_origin_y" type="double" value="8.0" />
-- <param name="/search_step_size" type="double" value="0.5" />
+- `<param name="/object_origin_x" type="double" value="5.0" />`
+- `<param name="/object_origin_y" type="double" value="8.0" />`
+- `<param name="/search_step_size" type="double" value="0.5" />`
 
 ## Node descriptions ##
 
