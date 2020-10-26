@@ -1,3 +1,8 @@
+//Author: Michael Muldoon
+//email: michael.muldoon.home@gmail.com
+//license: Apache 2.0
+//Comment: This node drives the robot between goals to search for the circle
+
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 #include <turtlesim/Pose.h>

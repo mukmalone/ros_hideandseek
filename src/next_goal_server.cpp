@@ -1,3 +1,8 @@
+//Author: Michael Muldoon
+//email: michael.muldoon.home@gmail.com
+//license: Apache 2.0
+//Comment: This node is a service server to caculate the next goal for the Turtlesim robot to drive towards
+
 #include <ros/ros.h>
 #include <ros_hideandseek/NextGoal.h>
 

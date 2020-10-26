@@ -1,3 +1,8 @@
+//Author: Michael Muldoon
+//email: michael.muldoon.home@gmail.com
+//license: Apache 2.0
+//Comment: This node subscribes to the color sensor and looks at the color values to find the object
+
 #include "ros/ros.h"
 #include "turtlesim/Color.h"
 #include "std_msgs/String.h"

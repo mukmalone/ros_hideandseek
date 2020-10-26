@@ -1,3 +1,8 @@
+//Author: Michael Muldoon
+//email: michael.muldoon.home@gmail.com
+//license: Apache 2.0
+//Comment: This node is sets up the game board by placing a circle at the coordinates specified in the launch file
+
 #include <ros/ros.h>
 #include <turtlesim/TeleportAbsolute.h>
 #include <turtlesim/SetPen.h>
