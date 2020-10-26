@@ -39,6 +39,6 @@ Below is a picture of the rqt_graph outlining the nodes and the topics they use 
 - this node is what gives velocity commands to move the turtlesim robot.  When it reachs a goal it will request the next goal from the next_goal_server until it receives a complete from the server or a complete from the /turtule_color_search.
 
 ![image info](./pictures/hideandseek_rqt.png)
-![image info](./pictures/game_start.png)
+![image info](./pictures/HideandSeek.gif)
 ![image info](./pictures/game_in_process.png)
 ![image info](./pictures/game_circle_found.png)
