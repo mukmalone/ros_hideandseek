@@ -1,5 +1,7 @@
 # Hide and seek game in ROS #
 
+This repository hosts the source code for the ROS < ros_hideandseek > package which implements a search routine for the Robot Operating System (ROS 1 Noetic) using turtlesim.
+
 ![image info](./pictures/HideandSeek.gif)
 
 I created this game to practice with some of the beginner ROS concepts.  
@@ -20,6 +22,20 @@ Here on YouTube I quickly go through running the game and the code.
 - Creating custom topics to communicate with nodes control data
 - building a custom next goal service which calculates the next goal to the turtlesim robot.  The search routine will be simply a zig-zag pattern with a spacing specified in the roslaunch file, search will always start at a search step distance from 0,0 
 - implementing go-to-goal algorithm and ensure driving is smooth
+
+## Usage ## 
+
+To use the < ros_hideandseek > pacage clone this repository into the < src > folder of your catkin workspace.
+
+Then build the workspace with < catkin_make >.
+
+Finally start the package using roslaunch command:
+< roslaunch ros_hideandseek hideandseek.launch >
+
+To change the starting location of the ball and search density edit the hideandseek.launch file using the following parameters:
+- <param name="/object_origin_x" type="double" value="5.0" /> 
+- <param name="/object_origin_y" type="double" value="8.0" />
+- <param name="/search_step_size" type="double" value="0.5" />
 
 ## Node descriptions ##
 
