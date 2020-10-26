@@ -1,5 +1,7 @@
 # Hide and seek game in ROS #
 
+![image info](./pictures/HideandSeek.gif)
+
 I created this game to practice with some of the beginner ROS concepts.  
 
 The game will have the turtlesim robot search for a ball in it's workspace.  The starting parameters and search density be start parameters from the roslaunch file to place a ball at a x, y location and the search step size.  
@@ -37,8 +39,3 @@ Below is a picture of the rqt_graph outlining the nodes and the topics they use 
 
 ### /turtle_move ###
 - this node is what gives velocity commands to move the turtlesim robot.  When it reachs a goal it will request the next goal from the next_goal_server until it receives a complete from the server or a complete from the /turtule_color_search.
-
-![image info](./pictures/hideandseek_rqt.png)
-![image info](./pictures/HideandSeek.gif)
-![image info](./pictures/game_in_process.png)
-![image info](./pictures/game_circle_found.png)
