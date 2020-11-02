@@ -25,7 +25,7 @@ Here on YouTube I quickly go through running the game and the code.
 
 ## Usage ## 
 
-To use the `ros_hideandseek` pacage clone this repository into the `src` folder of your catkin workspace.
+To use the `ros_hideandseek` package clone this repository into the `src` folder of your catkin workspace.
 
 Then build the workspace with `catkin_make`.
 
